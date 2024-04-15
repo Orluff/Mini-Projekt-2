@@ -1,6 +1,7 @@
 using minServiceAPI.Models;
 using minServiceAPI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace minServiceAPI.Controllers;
 
@@ -9,9 +10,13 @@ namespace minServiceAPI.Controllers;
 public class UsersController : ControllerBase
 {
     private readonly UsersService _usersService;
+    private readonly IMemoryCache _memoryCache;
 
-    public UsersController(UsersService usersService) =>
+    public UsersController(UsersService usersService, IMemoryCache memoryCache)
+    {
         _usersService = usersService;
+        _memoryCache = memoryCache;
+    }
 
     [HttpGet]
     public async Task<List<User>> Get() =>
@@ -68,5 +73,17 @@ public class UsersController : ControllerBase
         await _usersService.RemoveAsync(id);
 
         return NoContent();
+    }
+
+    private User GetUserFromCache(int userId)
+    {
+        User user = null;
+        _memoryCache.TryGetValue(userId, out user);
+        return user;
+    }
+
+    private void RemoveFromCache(int userId)
+    {
+        _memoryCache.Remove(userId);
     }
 }

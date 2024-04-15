@@ -3,6 +3,8 @@ services:
     image: orluff/user-service:latest
     ports:
       - 5001:80
+    networks:
+      - newnetwork
   mongodb:
     image: mongo:latest
     environment:
@@ -12,9 +14,15 @@ services:
       - 27018:27017
     volumes:
       - mongodb_data_container:/data/db
+    networks:
+      - newnetwork
 
 volumes:
   mongodb_data_container:
 
   images_data:
     external: false
+
+networks:
+  newnetwork:
+    driver: bridge
