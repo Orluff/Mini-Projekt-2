@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using minServiceAPI.Models;
 using minServiceAPI.Services;
 
@@ -36,6 +37,8 @@ public class Program
 
 
         app.MapControllers();
+
+        Console.WriteLine();
 
         app.Run();
     }

@@ -1,6 +1,7 @@
 using minServiceAPI.Models;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using MongoDB.Driver.Core.Configuration;
 
 namespace minServiceAPI.Services;
 

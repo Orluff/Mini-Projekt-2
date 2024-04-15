@@ -1,4 +1,8 @@
 services:
+  user-svc:
+    image: orluff/user-service:latest
+    ports:
+      - 5001:80
   mongodb:
     image: mongo:latest
     environment:
